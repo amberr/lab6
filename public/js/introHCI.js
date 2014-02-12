@@ -12,6 +12,8 @@ function initializePage() {
 	$('.project a').click(addProjectDetails);
 
 	$('#colorBtn').click(randomizeColors);
+
+	$('#travelBtn').click(addTravelImages);
 }
 
 /*
@@ -59,4 +61,18 @@ function randomizeColors(e) {
 		$('p').css('color', colors[3]);
 		$('.project img').css('opacity', .75);
 	});
+}
+
+function addTravelImages() {
+	$.get('https://api.pinterest.com/v3/pidgets/boards/slamberrose/sights/pins/', callback, 'jsonp');
+}
+
+function callback(results) {
+	console.log(results);
+	var objects = results['data']['pins'];
+	var html = "";
+	for(var i=0; i<objects.length; i++) {
+		html += "<img src=\"" + objects[i]['link'] + "\" />";
+	}
+	$("#travel").html(html);
 }
